@@ -1,9 +1,19 @@
 import React from 'react';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+} from 'react-router-dom';
+import Home from '<pages>/Home';
 
 const App = () => {
   return (
     <div className="App">
-      <h2>Welcome To React Boilerplate Template App</h2>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={Home} />
+        </Switch>
+      </Router>
     </div>
   );
 };
