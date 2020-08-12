@@ -14,6 +14,7 @@ const sideNavItems = [
     items: [
       {
         name: 'Overview',
+        path: '/',
         icon: Dashboard,
       },
     ],
@@ -23,18 +24,22 @@ const sideNavItems = [
     items: [
       {
         name: 'All Payments',
+        path: '/all-payments',
         icon: Wallet43,
       },
       {
         name: 'Reconcilled Payments',
+        path: '/reconcilled-payments',
         icon: Wallet44,
       },
       {
         name: 'Un - Reconcilled Payments',
+        path: '/unreconcilled-payments',
         icon: Wallet45,
       },
       {
         name: 'Manual Settlement',
+        path: '/manual-settlement',
         icon: ManualRecord,
       },
     ],
@@ -44,14 +49,17 @@ const sideNavItems = [
     items: [
       {
         name: 'All Orders',
+        path: '/all-orders',
         icon: Order1,
       },
       {
         name: 'Pending Orders',
+        path: '/pending-orders',
         icon: Order2,
       },
       {
         name: 'Reconcilled Orders',
+        path: '/reconcilled-orders',
         icon: Order3,
       },
     ],
@@ -61,6 +69,7 @@ const sideNavItems = [
     items: [
       {
         name: 'Merchant Profile',
+        path: '/merchant-profile',
         icon: Profile,
       },
     ],

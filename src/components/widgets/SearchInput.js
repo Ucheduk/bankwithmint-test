@@ -7,7 +7,7 @@ const SearchInput = ({
 }) => {
   return (
     <div className={className}>
-      <SearchIcon fontSize="medium" />
+      <SearchIcon fontSize="small" />
       <input
         id={id}
         placeholder={placeholder}

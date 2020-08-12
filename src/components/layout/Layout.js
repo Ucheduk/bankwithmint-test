@@ -7,8 +7,10 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <SideNav />
-      {children}
+      <div className="main-section">
+        <SideNav />
+        {children}
+      </div>
     </>
   );
 };

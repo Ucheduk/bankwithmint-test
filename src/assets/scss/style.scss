@@ -9,6 +9,12 @@
 @import "base/base";
 @import "./components/button";
 @import "./components/form";
-@import "./layout/footer";
+@import "./layout/sidenav";
 @import "./layout/header";
 @import './pages/home';
+
+.main-section {
+  width: 100%;
+  display: flex;
+  padding-top: 60px;
+}
