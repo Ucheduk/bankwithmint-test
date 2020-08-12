@@ -1,11 +1,14 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
-const uglifyJS = new UglifyJsPlugin({
+const terserPlugin = new TerserPlugin({
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
   cache: true,
   parallel: true,
+  terserOptions: {
+    ecma: 6,
+  },
 });
 
 module.exports = {
@@ -17,16 +20,13 @@ module.exports = {
     hints: false,
   },
   optimization: {
-    minimizer: [uglifyJS],
-    // splitChunks: {
-    //   chunks: 'all'
-    // }
+    minimizer: [terserPlugin],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
       chunkFilename: 'css/[id].[hash].css',
     }),
-    uglifyJS,
+    terserPlugin,
   ],
 };
