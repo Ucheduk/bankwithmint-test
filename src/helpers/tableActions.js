@@ -1,20 +1,26 @@
 const changePage = (
-  data, page = 1, prev = false, lastIndex = 0, recordsPerPage = 10,
+  data,
+  page = 0,
+  prev = false,
+  lastIndex = 0,
+  firstIndex = 0,
+  recordsPerPage = 10,
 ) => {
-  let slicedData, firstIndex;
+  let slicedData;
 
-  if (page > 1) page += 1;
-
-  if (!lastIndex) firstIndex = 0;
-  else firstIndex = lastIndex + 1;
+  if (!prev) {
+    page += 1;
+    if (lastIndex) firstIndex = lastIndex + 1;
+    if (data.length <= firstIndex + recordsPerPage) lastIndex = data.length;
+    else lastIndex = firstIndex + recordsPerPage;
+  }
 
   if (prev) {
     page -= 1;
-    firstIndex = lastIndex - recordsPerPage;
+    lastIndex = firstIndex;
+    if (firstIndex - recordsPerPage < 0) firstIndex = 0;
+    else firstIndex -= recordsPerPage;
   }
-
-  if (data.length <= firstIndex + recordsPerPage) lastIndex = data.length;
-  else lastIndex = firstIndex + recordsPerPage;
 
   if (data.length <= recordsPerPage) slicedData = [...data];
   else slicedData = data.slice(firstIndex, lastIndex);

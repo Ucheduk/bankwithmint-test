@@ -48,13 +48,31 @@ const PaymentTable = ({ className, data, options }) => {
 
   const prevPage = () => {
     if (pageNo > 1) {
-      changePage(pageNo);
+      const {
+        slicedData,
+        page,
+        firstIndex,
+        lastIndex,
+      } = changePage(filteredData, pageNo, true, lastIndexNo, firstIndexNo);
+      setPaymentData(slicedData);
+      setPageNo(page);
+      setFirstIndexNo(firstIndex);
+      setLastIndexNo(lastIndex);
     }
   };
 
   const nextPage = () => {
     if (entries > lastIndexNo) {
-      changePage(pageNo);
+      const {
+        slicedData,
+        page,
+        firstIndex,
+        lastIndex,
+      } = changePage(filteredData, pageNo, false, (lastIndexNo - 1));
+      setPageNo(page);
+      setFirstIndexNo(firstIndex);
+      setLastIndexNo(lastIndex);
+      setPaymentData(slicedData);
     }
   };
 
@@ -108,17 +126,32 @@ const PaymentTable = ({ className, data, options }) => {
           </span>
         }
         <div className="btn-group">
-          <button type="button" className="btn-ctl btn-prev" id="btn-prev">
+          <button
+            type="button"
+            className="btn-ctl btn-prev"
+            id="btn-prev"
+            onClick={prevPage}
+          >
             Previous
           </button>
           <button type="button" className="btn-ctl btn-num1" id="btn-num1">
             {pageNo}
           </button>
-          <button type="button" className="btn-ctl btn-num2" id="btn-num2">
+          <button
+            type="button"
+            className="btn-ctl btn-num2"
+            id="btn-num2"
+            onClick={nextPage}
+          >
             {pageNo + 1}
           </button>
-          <button type="button" className="btn-ctl btn-next" id="btn-next">
-              Next
+          <button
+            type="button"
+            className="btn-ctl btn-next"
+            id="btn-next"
+            onClick={nextPage}
+          >
+            Next
           </button>
         </div>
       </div>

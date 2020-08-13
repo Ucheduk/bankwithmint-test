@@ -67,7 +67,13 @@
       }
       &__tbody{
         background-color: #fff;
-        border-bottom: 1px solid #787878;
+
+        tr {
+          border-bottom: 1px solid #787878;
+          &:last-child {
+            border: none;
+          }
+        }
 
         td {
           padding: 20px;
@@ -88,6 +94,11 @@
         .btn-ctl {
           padding: 5px 10px;
           border: none;
+
+          &:hover {
+            background-color: #1875F0;
+            color: #fff;
+          }
         }
 
         .btn-prev {
