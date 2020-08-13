@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import SearchInput from './SearchInput';
 import FilterDropdown from './FilterDropdown';
 import tableActions from '<helpers>/tableActions';
+import Button from '<components>/items/Button';
+import CircleGreen from '<image>/circle-green.svg';
+import CircleYellow from '<image>/circle-yellow.svg';
+import CircleGray from '<image>/circle-gray.svg';
 
 const PaymentTable = ({ className, data, options }) => {
   const [searchText, setSearchText] = useState('');
@@ -44,6 +48,24 @@ const PaymentTable = ({ className, data, options }) => {
   const handleFilter = (e) => {
     const option = e.target.value;
     setFilteredOption(option);
+  };
+
+  const selectSvg = (value) => {
+    if (value === 'Settled' || value === 'Reconcilled') return CircleGreen;
+    if (value === 'Unsettled') return CircleYellow;
+    if (value === 'Un-reconcilled') return CircleGray;
+  };
+
+  const getDateTime = (value) => {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr',
+      'May', 'Jun', 'Jul', 'Aug', 'Sep',
+      'Oct', 'Nov', 'Dec',
+    ];
+    const date = new Date(Number(value) * 1000);
+    return `${months[date.getMonth()]}, 
+      ${date.getDate()}, ${date.getFullYear()} - 
+      ${date.getHours()}:${date.getMinutes()}`;
   };
 
   const prevPage = () => {
@@ -110,8 +132,16 @@ const PaymentTable = ({ className, data, options }) => {
               <td>{item.itemType}</td>
               <td>{item.price}</td>
               <td>{item.date}</td>
-              <td>{item.date}</td>
-              <td>{item.status}</td>
+              <td>{getDateTime(item.date)}</td>
+              <td>
+                <div className="btn-td">
+                  <img src={selectSvg(item.status)} />
+                  <Button
+                    text={item.status}
+                    className="btn"
+                  />
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
