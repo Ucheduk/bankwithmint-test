@@ -13,6 +13,12 @@
 @import "./layout/header";
 @import './pages/home';
 
+textarea:focus,
+select:focus,
+input:focus {
+  outline: none;
+}
+
 .main-section {
   width: 100%;
   display: flex;
