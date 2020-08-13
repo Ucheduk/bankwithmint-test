@@ -601,4 +601,11 @@ const transactions = [
   },
 ];
 
-export default transactions;
+const options = [
+  'Settled',
+  'Unsettled',
+  'Reconcilled',
+  'Un-reconcilled',
+];
+
+export default { transactions, options };

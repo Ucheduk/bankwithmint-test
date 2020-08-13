@@ -4,7 +4,7 @@ import SearchInput from './SearchInput';
 import FilterDropdown from './FilterDropdown';
 import tableActions from '<helpers>/tableActions';
 
-const PaymentTable = ({ className, data }) => {
+const PaymentTable = ({ className, data, options }) => {
   const [searchText, setSearchText] = useState('');
   const [pageNo, setPageNo] = useState();
   const [firstIndexNo, setFirstIndexNo] = useState();
@@ -34,11 +34,16 @@ const PaymentTable = ({ className, data }) => {
     setPageNo(page);
     setFirstIndexNo(firstIndex);
     setLastIndexNo(lastIndex);
-  }, [searchText]);
+  }, [searchText, filteredOption]);
 
   const handleSearch = (e) => {
     const text = e.target.value;
     setSearchText(text);
+  };
+
+  const handleFilter = (e) => {
+    const option = e.target.value;
+    setFilteredOption(option);
   };
 
   const prevPage = () => {
@@ -67,6 +72,8 @@ const PaymentTable = ({ className, data }) => {
         <FilterDropdown
           className="table-top__filter"
           text="Show"
+          options={options}
+          handleChange={handleFilter}
         />
       </div>
       <table className="table-main">
@@ -122,6 +129,7 @@ const PaymentTable = ({ className, data }) => {
 PaymentTable.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
+  options: PropTypes.array,
 };
 
 export default PaymentTable;

@@ -4,12 +4,14 @@ import PaymentTable from '<components>/widgets/PaymentTable';
 import paymentTransactions from '<helpers>/paymentTransactions';
 
 const Home = () => {
+  const { transactions, options } = paymentTransactions;
   return (
     <Layout>
       <div className="home-section">
         <PaymentTable
           className="home-section__payment-table"
-          data={paymentTransactions}
+          data={transactions}
+          options={options}
         />
       </div>
     </Layout>
