@@ -1,15 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SearchInput from './SearchInput';
 import FilterDropdown from './FilterDropdown';
+import tableActions from '<helpers>/tableActions';
 
 const PaymentTable = ({ className, data }) => {
   const [searchText, setSearchText] = useState('');
+  const [pageNo, setPageNo] = useState();
+  const [firstIndexNo, setFirstIndexNo] = useState();
+  const [lastIndexNo, setLastIndexNo] = useState();
+  const [filteredOption, setFilteredOption] = useState('all');
+  const [filteredData, setFilteredData] = useState([]);
+  const [entries, setEntries] = useState(0);
+  const [paymentData, setPaymentData] = useState([]);
 
-  const handleChange = (e) => {
+  const { changePage, searchPage } = tableActions;
+
+  useEffect(() => {
+    const {
+      result,
+      length,
+    } = searchPage(data, searchText, filteredOption);
+    setFilteredData(result);
+    setEntries(length);
+
+    const {
+      slicedData,
+      page,
+      firstIndex,
+      lastIndex,
+    } = changePage(result);
+    setPaymentData(slicedData);
+    setPageNo(page);
+    setFirstIndexNo(firstIndex);
+    setLastIndexNo(lastIndex);
+  }, [searchText]);
+
+  const handleSearch = (e) => {
     const text = e.target.value;
     setSearchText(text);
-    console.log(text);
+  };
+
+  const prevPage = () => {
+    if (pageNo > 1) {
+      changePage(pageNo);
+    }
+  };
+
+  const nextPage = () => {
+    if (entries > lastIndexNo) {
+      changePage(pageNo);
+    }
   };
 
   return (
@@ -21,7 +62,7 @@ const PaymentTable = ({ className, data }) => {
           className="table-top__search"
           placeholder="Search payment..."
           value={searchText}
-          handleChange={handleChange}
+          handleChange={handleSearch}
         />
         <FilterDropdown
           className="table-top__filter"
@@ -30,7 +71,7 @@ const PaymentTable = ({ className, data }) => {
       </div>
       <table className="table-main">
         <thead className="table-main__thead">
-          <tr className="table-main_tr">
+          <tr>
             <th>Item Type</th>
             <th>Price</th>
             <th>Transaction No</th>
@@ -39,28 +80,35 @@ const PaymentTable = ({ className, data }) => {
           </tr>
         </thead>
         <tbody className="table-main__tbody">
-          <tr className="table-main_tr">
-            <td>nibh vulputate mauris sagittis placerat. Cras</td>
-            <td>$79.02</td>
-            <td>Reconcilled</td>
-            <td>1579451071</td>
-            <td>Button</td>
-          </tr>
+          {paymentData.map((item) => (
+            <tr key={item.date}>
+              <td>{item.itemType}</td>
+              <td>{item.price}</td>
+              <td>{item.date}</td>
+              <td>{item.date}</td>
+              <td>{item.status}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <div className="table-footer">
-        <span className="page-entries">
-          Showing 1 to 10 of 500 entries
-        </span>
+        {entries === 0
+          ? <span className="page-entries">
+            No record found
+          </span>
+          : <span className="page-entries">
+            Showing {firstIndexNo + 1} to {lastIndexNo} of {entries} entries
+          </span>
+        }
         <div className="btn-group">
           <button type="button" className="btn-ctl btn-prev" id="btn-prev">
             Previous
           </button>
           <button type="button" className="btn-ctl btn-num1" id="btn-num1">
-            1
+            {pageNo}
           </button>
           <button type="button" className="btn-ctl btn-num2" id="btn-num2">
-            2
+            {pageNo + 1}
           </button>
           <button type="button" className="btn-ctl btn-next" id="btn-next">
               Next
